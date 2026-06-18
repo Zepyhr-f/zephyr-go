@@ -1,0 +1,35 @@
+syntax = "v1"
+
+info(
+    title: "Menu API"
+    desc: "菜单管理接口"
+)
+
+type (
+    MenuTreeResp {
+        List []MenuDetail `json:"list"`
+    }
+    
+    MenuDetail {
+        MenuCode   string       `json:"menuCode"`
+        ParentCode string       `json:"parentCode"`
+        MenuName   string       `json:"menuName"`
+        Icon       string       `json:"icon"`
+        MenuType   string       `json:"menuType"` // M/C/F
+        Perms      string       `json:"perms"`
+        Path       string       `json:"path"`
+        Component  string       `json:"component"`
+        OrderNum   int32        `json:"orderNum"`
+        Children   []MenuDetail `json:"children,optional"`
+    }
+)
+
+@server(
+    jwt: Auth
+    group: menu
+    prefix: /api/v1/system/menu
+)
+service gateway-api {
+    @handler menuTree
+    get /tree returns (MenuTreeResp)
+}

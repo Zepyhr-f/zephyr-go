@@ -1,0 +1,8 @@
+Name: identity.rpc
+ListenOn: 0.0.0.0:8081
+Consul:
+  Host: consul:8500
+  Key: identity.rpc
+
+Postgres:
+  DSN: postgres://postgres:postgres@pgsql-pgvector:5432/zephyr_db?sslmode=disable

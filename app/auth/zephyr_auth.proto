@@ -1,0 +1,48 @@
+syntax = "proto3";
+
+package auth;
+
+option go_package = "./pb";
+
+// --- 消息体定义 ---
+
+message LoginVerifyReq {
+    string username = 1;
+    string password = 2;
+    string tenant_code = 3;
+    string captcha_code = 4; // 预留图形验证码
+    string captcha_uuid = 5;
+}
+
+message LoginVerifyResp {
+    string access_token = 1;
+    string refresh_token = 2; 
+    int64  expire = 3;
+    string user_code = 4;
+    string tenant_code = 5;
+}
+
+message RefreshTokenReq {
+    string refresh_token = 1;
+}
+
+message LogoutReq {
+    string access_token_jti = 1;
+    string refresh_token_jti = 2;
+    int64  access_expire = 3; // 用于设置黑名单过期时间
+}
+
+message EmptyResp {}
+
+// --- 服务定义 ---
+
+service AuthService {
+    // 【账号密码登录】
+    rpc LoginVerify(LoginVerifyReq) returns (LoginVerifyResp);
+
+    // 【Token刷新】
+    rpc RefreshToken(RefreshTokenReq) returns (LoginVerifyResp);
+    
+    // 【安全登出】
+    rpc Logout(LogoutReq) returns (EmptyResp);
+}

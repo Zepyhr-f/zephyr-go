@@ -1,0 +1,64 @@
+syntax = "v1"
+
+info(
+    title: "Dept API"
+    desc: "部门管理接口"
+)
+
+type (
+    DeptTreeResp {
+        List []DeptDetail `json:"list"`
+    }
+    
+    DeptDetail {
+        Id         string       `json:"id"`
+        Code       string       `json:"code"`
+        ParentCode string       `json:"parentCode,optional"`
+        Leaf       int32        `json:"leaf"`
+        DeptName   string       `json:"deptName"`
+        OrderNum   int32        `json:"orderNum"`
+        Status     int32        `json:"status"`
+        CreateTime string       `json:"createTime"`
+        Children   []DeptDetail `json:"children,optional"`
+    }
+    
+    DeptSaveReq {
+        Code       string `json:"code"`
+        ParentCode string `json:"parentCode,optional"`
+        DeptName   string `json:"deptName"`
+        OrderNum   int32  `json:"orderNum"`
+        Status     int32  `json:"status,optional"`
+    }
+    
+    DeptUpdateReq {
+        Id         string `json:"id"`
+        Code       string `json:"code"`
+        ParentCode string `json:"parentCode,optional"`
+        DeptName   string `json:"deptName"`
+        OrderNum   int32  `json:"orderNum"`
+        Status     int32  `json:"status,optional"`
+    }
+    
+    DeptRemoveReq {
+        Ids []string `json:"ids"`
+    }
+)
+
+@server(
+    jwt: Auth
+    group: dept
+    prefix: /api/v1/system/dept
+)
+service gateway-api {
+    @handler deptTree
+    get /tree returns (DeptTreeResp)
+    
+    @handler deptSave
+    post /save (DeptSaveReq)
+    
+    @handler deptUpdate
+    post /update (DeptUpdateReq)
+    
+    @handler deptRemove
+    post /remove (DeptRemoveReq)
+}

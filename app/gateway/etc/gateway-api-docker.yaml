@@ -1,0 +1,13 @@
+Name: gateway-api
+Host: 0.0.0.0
+Port: 8888
+
+AuthRpc:
+  Target: consul://consul:8500/auth.rpc?wait=14s
+
+IdentityRpc:
+  Target: consul://consul:8500/identity.rpc?wait=14s
+
+Auth:
+  AccessSecret: zephyr-admin-secret-key-2026
+  AccessExpire: 86400

@@ -1,0 +1,78 @@
+syntax = "v1"
+
+info(
+    title: "Post API"
+    desc: "岗位管理接口"
+)
+
+type (
+    PostPageReq {
+        Current  int    `form:"current,default=1"`
+        Size     int    `form:"size,default=10"`
+        PostName string `form:"postName,optional"`
+        Status   int32  `form:"status,optional"`
+    }
+    
+    PostPageResp {
+        Total   int64        `json:"total"`
+        Records []PostDetail `json:"records"`
+        Size    int          `json:"size"`
+        Current int          `json:"current"`
+        Pages   int          `json:"pages"`
+    }
+    
+    PostDetail {
+        Id         int64  `json:"id"`
+        Code       string `json:"code"`
+        PostName   string `json:"postName"`
+        OrderNum   int32  `json:"orderNum"`
+        Status     int32  `json:"status"`
+        CreateTime string `json:"createTime"`
+    }
+    
+    PostSaveReq {
+        Code     string `json:"code"`
+        PostName string `json:"postName"`
+        OrderNum int32  `json:"orderNum"`
+        Status   int32  `json:"status,optional"`
+    }
+    
+    PostUpdateReq {
+        Id       int64  `json:"id"`
+        Code     string `json:"code"`
+        PostName string `json:"postName"`
+        OrderNum int32  `json:"orderNum"`
+        Status   int32  `json:"status,optional"`
+    }
+    
+    PostStatusReq {
+        Code   string `json:"code"`
+        Status int32  `json:"status"`
+    }
+    
+    PostRemoveReq {
+        Codes []string `json:"codes"`
+    }
+)
+
+@server(
+    jwt: Auth
+    group: post
+    prefix: /api/v1/system/post
+)
+service gateway-api {
+    @handler postPage
+    get /list (PostPageReq) returns (PostPageResp)
+    
+    @handler postSave
+    post /save (PostSaveReq)
+    
+    @handler postUpdate
+    post /update (PostUpdateReq)
+    
+    @handler postRemove
+    post /remove (PostRemoveReq)
+    
+    @handler postStatus
+    post /status (PostStatusReq)
+}

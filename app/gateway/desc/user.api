@@ -1,0 +1,83 @@
+syntax = "v1"
+
+info(
+    title: "User API"
+    desc: "用户管理接口"
+)
+
+type (
+    UserListReq {
+        Username string `form:"username,optional"`
+        RealName string `form:"realName,optional"`
+        Phone    string `form:"phone,optional"`
+        Status   int32  `form:"status,optional"`
+        DeptCode string `form:"deptCode,optional"`
+    }
+    
+    UserListResp {
+        List []UserDetail `json:"list"`
+    }
+    
+    UserDetail {
+        Id         string   `json:"id"`
+        Code       string   `json:"code"`
+        Username   string   `json:"username"`
+        RealName   string   `json:"realName"`
+        Phone      string   `json:"phone"`
+        Email      string   `json:"email"`
+        Sex        int32    `json:"sex"`
+        DeptId     string   `json:"deptId"`
+        DeptName   string   `json:"deptName"`
+        Status     int32    `json:"status"`
+        Avatar     string   `json:"avatar"`
+        RoleCodes  []string `json:"roleCodes"`
+        CreateTime string   `json:"createTime"`
+    }
+    
+    UserSubmitReq {
+        Id       string `json:"id,optional"`
+        Code     string `json:"code,optional"`
+        NickName string `json:"nickName"`
+        RealName string `json:"realName"`
+        Phone    string `json:"phone,optional"`
+        Email    string `json:"email,optional"`
+        DeptCode string `json:"deptCode"`
+        Sex      int32  `json:"sex,optional"`
+        Status   int32  `json:"status,optional"`
+    }
+    
+    UserUpdateStatusReq {
+        Id     string `json:"id"`
+        Status int32  `json:"status"`
+    }
+    
+    UserResetPasswordReq {
+        Id string `json:"id"`
+    }
+    
+    UserRemoveReq {
+        Ids []string `json:"ids"`
+    }
+)
+
+@server(
+    jwt: Auth
+    group: user
+    prefix: /api/v1/system/user
+)
+service gateway-api {
+    @handler userList
+    get /list (UserListReq) returns (UserListResp)
+    
+    @handler userSubmit
+    post /submit (UserSubmitReq)
+    
+    @handler userUpdateStatus
+    post /updateStatus (UserUpdateStatusReq)
+    
+    @handler userResetPassword
+    post /resetPassword (UserResetPasswordReq)
+    
+    @handler userRemove
+    post /remove (UserRemoveReq)
+}

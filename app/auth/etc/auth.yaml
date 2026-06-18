@@ -1,0 +1,18 @@
+Name: auth.rpc
+ListenOn: 127.0.0.1:8080
+Consul:
+  Host: 127.0.0.1:8500
+  Key: auth.rpc
+
+IdentityRpc:
+  Target: consul://127.0.0.1:8500/identity.rpc?wait=14s
+
+BizRedis:
+  Host: 127.0.0.1:6379
+  Pass: "redis"
+  DB: 0
+
+JwtAuth:
+  AccessSecret: zephyr-admin-secret-key-2026
+  AccessExpire: 86400
+

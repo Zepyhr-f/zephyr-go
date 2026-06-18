@@ -1,0 +1,16 @@
+syntax = "v1"
+
+info (
+	title:   "Zephyr Admin API Gateway"
+	desc:    "统一网关总入口"
+	author:  "Zephyr"
+	version: "1.0.0"
+)
+
+import "desc/auth.api"
+import "desc/identity.api"
+import "desc/user.api"
+import "desc/role.api"
+import "desc/menu.api"
+import "desc/dept.api"
+import "desc/post.api"

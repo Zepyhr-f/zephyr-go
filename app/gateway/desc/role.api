@@ -1,0 +1,69 @@
+syntax = "v1"
+
+info(
+    title: "Role API"
+    desc: "角色管理接口"
+)
+
+type (
+    RolePageReq {
+        Current  int    `form:"current,default=1"`
+        Size     int    `form:"size,default=10"`
+        RoleName string `form:"roleName,optional"`
+        Status   int32  `form:"status,optional"`
+    }
+    
+    RolePageResp {
+        Total   int64        `json:"total"`
+        Records []RoleDetail `json:"records"`
+        Size    int          `json:"size"`
+        Current int          `json:"current"`
+        Pages   int          `json:"pages"`
+    }
+    
+    RoleDetail {
+        Id         string `json:"id"`
+        Code       string `json:"code"`
+        RoleName   string `json:"roleName"`
+        RoleSort   int32  `json:"roleSort"`
+        Status     int32  `json:"status"`
+        CreateTime string `json:"createTime"`
+    }
+    
+    RoleSubmitReq {
+        Id       string `json:"id,optional"`
+        Code     string `json:"code"`
+        RoleName string `json:"roleName"`
+        OrderNum int32  `json:"orderNum"`
+        Status   int32  `json:"status,optional"`
+        Remark   string `json:"remark,optional"`
+    }
+    
+    RoleUpdateStatusReq {
+        Id     string `json:"id"`
+        Status int32  `json:"status"`
+    }
+    
+    RoleRemoveReq {
+        Ids []string `json:"ids"`
+    }
+)
+
+@server(
+    jwt: Auth
+    group: role
+    prefix: /api/v1/system/role
+)
+service gateway-api {
+    @handler rolePage
+    get /list (RolePageReq) returns (RolePageResp)
+    
+    @handler roleSubmit
+    post /submit (RoleSubmitReq)
+    
+    @handler roleUpdateStatus
+    post /updateStatus (RoleUpdateStatusReq)
+    
+    @handler roleRemove
+    post /remove (RoleRemoveReq)
+}

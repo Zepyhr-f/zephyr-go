@@ -1,0 +1,33 @@
+syntax = "v1"
+
+info(
+    title: "Identity API"
+    desc: "身份认证与用户管理接口"
+)
+
+type (
+    UserInfoReq {}
+    
+    UserEntity {
+        UserCode string `json:"userCode"`
+        Username string `json:"username"`
+        Avatar   string `json:"avatar"`
+    }
+    
+    UserInfoResp {
+        User  UserEntity `json:"user"`
+        Roles []string   `json:"roles"`
+        Perms []string   `json:"perms"`
+    }
+)
+
+@server(
+    jwt: Auth
+    group: identity
+    prefix: /api/v1/auth
+)
+service gateway-api {
+    @doc "获取当前登录用户信息"
+    @handler getUserInfo
+    get /info (UserInfoReq) returns (UserInfoResp)
+}
