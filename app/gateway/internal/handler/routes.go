@@ -6,6 +6,7 @@ package handler
 import (
 	"net/http"
 
+	adminextra "zephyr-go/app/gateway/internal/handler/adminextra"
 	auth "zephyr-go/app/gateway/internal/handler/auth"
 	dept "zephyr-go/app/gateway/internal/handler/dept"
 	identity "zephyr-go/app/gateway/internal/handler/identity"
@@ -21,50 +22,19 @@ import (
 func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 	server.AddRoutes(
 		[]rest.Route{
-			{
-				// 用户登录
-				Method:  http.MethodPost,
-				Path:    "/login",
-				Handler: auth.LoginHandler(serverCtx),
-			},
-			{
-				// 退出登录
-				Method:  http.MethodPost,
-				Path:    "/logout",
-				Handler: auth.LogoutHandler(serverCtx),
-			},
-			{
-				// 刷新Token
-				Method:  http.MethodPost,
-				Path:    "/refresh",
-				Handler: auth.RefreshHandler(serverCtx),
-			},
+			{Method: http.MethodPost, Path: "/login", Handler: auth.LoginHandler(serverCtx)},
+			{Method: http.MethodPost, Path: "/logout", Handler: auth.LogoutHandler(serverCtx)},
+			{Method: http.MethodPost, Path: "/refresh", Handler: auth.RefreshHandler(serverCtx)},
 		},
 		rest.WithPrefix("/api/v1/auth"),
 	)
 
 	server.AddRoutes(
 		[]rest.Route{
-			{
-				Method:  http.MethodPost,
-				Path:    "/remove",
-				Handler: dept.DeptRemoveHandler(serverCtx),
-			},
-			{
-				Method:  http.MethodPost,
-				Path:    "/save",
-				Handler: dept.DeptSaveHandler(serverCtx),
-			},
-			{
-				Method:  http.MethodGet,
-				Path:    "/tree",
-				Handler: dept.DeptTreeHandler(serverCtx),
-			},
-			{
-				Method:  http.MethodPost,
-				Path:    "/update",
-				Handler: dept.DeptUpdateHandler(serverCtx),
-			},
+			{Method: http.MethodPost, Path: "/remove", Handler: dept.DeptRemoveHandler(serverCtx)},
+			{Method: http.MethodPost, Path: "/save", Handler: dept.DeptSaveHandler(serverCtx)},
+			{Method: http.MethodGet, Path: "/tree", Handler: dept.DeptTreeHandler(serverCtx)},
+			{Method: http.MethodPost, Path: "/update", Handler: dept.DeptUpdateHandler(serverCtx)},
 		},
 		rest.WithJwt(serverCtx.Config.Auth.AccessSecret),
 		rest.WithPrefix("/api/v1/system/dept"),
@@ -72,12 +42,7 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 
 	server.AddRoutes(
 		[]rest.Route{
-			{
-				// 获取当前登录用户信息
-				Method:  http.MethodGet,
-				Path:    "/info",
-				Handler: identity.GetUserInfoHandler(serverCtx),
-			},
+			{Method: http.MethodGet, Path: "/info", Handler: identity.GetUserInfoHandler(serverCtx)},
 		},
 		rest.WithJwt(serverCtx.Config.Auth.AccessSecret),
 		rest.WithPrefix("/api/v1/auth"),
@@ -85,11 +50,13 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 
 	server.AddRoutes(
 		[]rest.Route{
-			{
-				Method:  http.MethodGet,
-				Path:    "/tree",
-				Handler: menu.MenuTreeHandler(serverCtx),
-			},
+			{Method: http.MethodGet, Path: "/tree", Handler: menu.MenuTreeHandler(serverCtx)},
+			{Method: http.MethodGet, Path: "/list", Handler: adminextra.MenuListHandler(serverCtx)},
+			{Method: http.MethodGet, Path: "/detail", Handler: adminextra.MenuDetailHandler(serverCtx)},
+			{Method: http.MethodPost, Path: "/save", Handler: adminextra.MenuMutationHandler("菜单保存接口已预留，当前最小实现不执行危险写入")},
+			{Method: http.MethodPost, Path: "/update", Handler: adminextra.MenuMutationHandler("菜单更新接口已预留，当前最小实现不执行危险写入")},
+			{Method: http.MethodPost, Path: "/remove", Handler: adminextra.MenuMutationHandler("菜单删除接口已预留，当前最小实现不执行危险写入")},
+			{Method: http.MethodPost, Path: "/status", Handler: adminextra.MenuMutationHandler("菜单状态接口已预留，当前最小实现不执行危险写入")},
 		},
 		rest.WithJwt(serverCtx.Config.Auth.AccessSecret),
 		rest.WithPrefix("/api/v1/system/menu"),
@@ -97,31 +64,11 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 
 	server.AddRoutes(
 		[]rest.Route{
-			{
-				Method:  http.MethodGet,
-				Path:    "/list",
-				Handler: post.PostPageHandler(serverCtx),
-			},
-			{
-				Method:  http.MethodPost,
-				Path:    "/remove",
-				Handler: post.PostRemoveHandler(serverCtx),
-			},
-			{
-				Method:  http.MethodPost,
-				Path:    "/save",
-				Handler: post.PostSaveHandler(serverCtx),
-			},
-			{
-				Method:  http.MethodPost,
-				Path:    "/status",
-				Handler: post.PostStatusHandler(serverCtx),
-			},
-			{
-				Method:  http.MethodPost,
-				Path:    "/update",
-				Handler: post.PostUpdateHandler(serverCtx),
-			},
+			{Method: http.MethodGet, Path: "/list", Handler: post.PostPageHandler(serverCtx)},
+			{Method: http.MethodPost, Path: "/remove", Handler: post.PostRemoveHandler(serverCtx)},
+			{Method: http.MethodPost, Path: "/save", Handler: post.PostSaveHandler(serverCtx)},
+			{Method: http.MethodPost, Path: "/status", Handler: post.PostStatusHandler(serverCtx)},
+			{Method: http.MethodPost, Path: "/update", Handler: post.PostUpdateHandler(serverCtx)},
 		},
 		rest.WithJwt(serverCtx.Config.Auth.AccessSecret),
 		rest.WithPrefix("/api/v1/system/post"),
@@ -129,26 +76,14 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 
 	server.AddRoutes(
 		[]rest.Route{
-			{
-				Method:  http.MethodGet,
-				Path:    "/list",
-				Handler: role.RolePageHandler(serverCtx),
-			},
-			{
-				Method:  http.MethodPost,
-				Path:    "/remove",
-				Handler: role.RoleRemoveHandler(serverCtx),
-			},
-			{
-				Method:  http.MethodPost,
-				Path:    "/submit",
-				Handler: role.RoleSubmitHandler(serverCtx),
-			},
-			{
-				Method:  http.MethodPost,
-				Path:    "/updateStatus",
-				Handler: role.RoleUpdateStatusHandler(serverCtx),
-			},
+			{Method: http.MethodGet, Path: "/list", Handler: role.RolePageHandler(serverCtx)},
+			{Method: http.MethodPost, Path: "/remove", Handler: role.RoleRemoveHandler(serverCtx)},
+			{Method: http.MethodPost, Path: "/submit", Handler: role.RoleSubmitHandler(serverCtx)},
+			{Method: http.MethodPost, Path: "/updateStatus", Handler: role.RoleUpdateStatusHandler(serverCtx)},
+			{Method: http.MethodGet, Path: "/detail", Handler: adminextra.RoleDetailHandler(serverCtx)},
+			{Method: http.MethodGet, Path: "/menuTree", Handler: adminextra.RoleMenuTreeHandler(serverCtx)},
+			{Method: http.MethodPost, Path: "/assignMenus", Handler: adminextra.RoleAssignMenusHandler(serverCtx)},
+			{Method: http.MethodPost, Path: "/dataScope", Handler: adminextra.RoleDataScopeHandler(serverCtx)},
 		},
 		rest.WithJwt(serverCtx.Config.Auth.AccessSecret),
 		rest.WithPrefix("/api/v1/system/role"),
@@ -156,33 +91,56 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 
 	server.AddRoutes(
 		[]rest.Route{
-			{
-				Method:  http.MethodGet,
-				Path:    "/list",
-				Handler: user.UserListHandler(serverCtx),
-			},
-			{
-				Method:  http.MethodPost,
-				Path:    "/remove",
-				Handler: user.UserRemoveHandler(serverCtx),
-			},
-			{
-				Method:  http.MethodPost,
-				Path:    "/resetPassword",
-				Handler: user.UserResetPasswordHandler(serverCtx),
-			},
-			{
-				Method:  http.MethodPost,
-				Path:    "/submit",
-				Handler: user.UserSubmitHandler(serverCtx),
-			},
-			{
-				Method:  http.MethodPost,
-				Path:    "/updateStatus",
-				Handler: user.UserUpdateStatusHandler(serverCtx),
-			},
+			{Method: http.MethodGet, Path: "/list", Handler: user.UserListHandler(serverCtx)},
+			{Method: http.MethodPost, Path: "/remove", Handler: user.UserRemoveHandler(serverCtx)},
+			{Method: http.MethodPost, Path: "/resetPassword", Handler: user.UserResetPasswordHandler(serverCtx)},
+			{Method: http.MethodPost, Path: "/submit", Handler: user.UserSubmitHandler(serverCtx)},
+			{Method: http.MethodPost, Path: "/updateStatus", Handler: user.UserUpdateStatusHandler(serverCtx)},
 		},
 		rest.WithJwt(serverCtx.Config.Auth.AccessSecret),
 		rest.WithPrefix("/api/v1/system/user"),
+	)
+
+	server.AddRoutes(
+		[]rest.Route{
+			{Method: http.MethodGet, Path: "/login-log/list", Handler: adminextra.PlaceholderListHandler("security.login-log")},
+			{Method: http.MethodGet, Path: "/op-log/list", Handler: adminextra.PlaceholderListHandler("security.op-log")},
+			{Method: http.MethodGet, Path: "/online/list", Handler: adminextra.PlaceholderListHandler("security.online")},
+		},
+		rest.WithJwt(serverCtx.Config.Auth.AccessSecret),
+		rest.WithPrefix("/api/v1/security"),
+	)
+
+	server.AddRoutes(
+		[]rest.Route{
+			{Method: http.MethodGet, Path: "/server", Handler: adminextra.ServerMetricsHandler(serverCtx)},
+			{Method: http.MethodGet, Path: "/cache", Handler: adminextra.CacheMetricsHandler(serverCtx)},
+			{Method: http.MethodGet, Path: "/datasource", Handler: adminextra.DatasourceMetricsHandler(serverCtx)},
+			{Method: http.MethodGet, Path: "/cron/list", Handler: adminextra.PlaceholderListHandler("monitor.cron")},
+		},
+		rest.WithJwt(serverCtx.Config.Auth.AccessSecret),
+		rest.WithPrefix("/api/v1/monitor"),
+	)
+
+	server.AddRoutes(
+		[]rest.Route{
+			{Method: http.MethodGet, Path: "/dict/type/list", Handler: adminextra.PlaceholderListHandler("infrastructure.dict.type")},
+			{Method: http.MethodGet, Path: "/dict/data/list", Handler: adminextra.PlaceholderListHandler("infrastructure.dict.data")},
+			{Method: http.MethodGet, Path: "/params/list", Handler: adminextra.PlaceholderListHandler("infrastructure.params")},
+			{Method: http.MethodGet, Path: "/files/list", Handler: adminextra.PlaceholderListHandler("infrastructure.files")},
+			{Method: http.MethodGet, Path: "/notices/list", Handler: adminextra.PlaceholderListHandler("infrastructure.notices")},
+		},
+		rest.WithJwt(serverCtx.Config.Auth.AccessSecret),
+		rest.WithPrefix("/api/v1/infrastructure"),
+	)
+
+	server.AddRoutes(
+		[]rest.Route{
+			{Method: http.MethodGet, Path: "/codegen/list", Handler: adminextra.PlaceholderListHandler("devtools.codegen")},
+			{Method: http.MethodGet, Path: "/api-doc/info", Handler: adminextra.DevtoolStatusHandler("api-doc")},
+			{Method: http.MethodGet, Path: "/sql/status", Handler: adminextra.DevtoolStatusHandler("sql")},
+		},
+		rest.WithJwt(serverCtx.Config.Auth.AccessSecret),
+		rest.WithPrefix("/api/v1/devtools"),
 	)
 }

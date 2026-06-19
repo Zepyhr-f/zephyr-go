@@ -226,3 +226,51 @@ type UserUpdateStatusReq struct {
 	Id     string `json:"id"`
 	Status int32  `json:"status"`
 }
+
+type CodeReq struct {
+	Code string `form:"code,optional" json:"code,optional"`
+}
+
+type OperationResp struct {
+	Success bool   `json:"success"`
+	Message string `json:"message"`
+}
+
+type MenuListResp struct {
+	Total   int64        `json:"total"`
+	Records []MenuDetail `json:"records"`
+	Size    int          `json:"size"`
+	Current int          `json:"current"`
+}
+
+type MenuDetailResp struct {
+	Menu MenuDetail `json:"menu"`
+}
+
+type RoleDetailExtraResp struct {
+	Role      RoleDetail `json:"role"`
+	MenuCodes []string   `json:"menuCodes"`
+}
+
+type RoleMenuTreeResp struct {
+	Menus       []MenuDetail `json:"menus"`
+	CheckedKeys []string     `json:"checkedKeys"`
+}
+
+type RoleAssignMenusReq struct {
+	RoleCode  string   `json:"roleCode"`
+	MenuCodes []string `json:"menuCodes"`
+}
+
+type RoleDataScopeReq struct {
+	RoleCode  string   `json:"roleCode"`
+	DataScope string   `json:"dataScope"`
+	DeptCodes []string `json:"deptCodes,optional"`
+}
+
+type AdminListResp struct {
+	Total   int64            `json:"total"`
+	Records []map[string]any `json:"records"`
+	Size    int              `json:"size"`
+	Current int              `json:"current"`
+}
