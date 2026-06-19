@@ -25,7 +25,14 @@ type (
 	GetUserInfoReq       = pb.GetUserInfoReq
 	GetUserInfoResp      = pb.GetUserInfoResp
 	MenuDetail           = pb.MenuDetail
+	MenuDetailReq        = pb.MenuDetailReq
+	MenuDetailResp       = pb.MenuDetailResp
+	MenuListResp         = pb.MenuListResp
+	MenuRemoveReq        = pb.MenuRemoveReq
+	MenuSaveReq          = pb.MenuSaveReq
+	MenuStatusReq        = pb.MenuStatusReq
 	MenuTreeResp         = pb.MenuTreeResp
+	MenuUpdateReq        = pb.MenuUpdateReq
 	PostDetail           = pb.PostDetail
 	PostPageReq          = pb.PostPageReq
 	PostPageResp         = pb.PostPageResp
@@ -33,7 +40,13 @@ type (
 	PostSaveReq          = pb.PostSaveReq
 	PostStatusReq        = pb.PostStatusReq
 	PostUpdateReq        = pb.PostUpdateReq
+	RoleAssignMenusReq   = pb.RoleAssignMenusReq
+	RoleDataScopeReq     = pb.RoleDataScopeReq
 	RoleDetail           = pb.RoleDetail
+	RoleDetailReq        = pb.RoleDetailReq
+	RoleDetailResp       = pb.RoleDetailResp
+	RoleMenuTreeReq      = pb.RoleMenuTreeReq
+	RoleMenuTreeResp     = pb.RoleMenuTreeResp
 	RolePageReq          = pb.RolePageReq
 	RolePageResp         = pb.RolePageResp
 	RoleRemoveReq        = pb.RoleRemoveReq
@@ -65,11 +78,21 @@ type (
 		PostStatus(ctx context.Context, in *PostStatusReq, opts ...grpc.CallOption) (*SuccessResp, error)
 		// Menu
 		MenuTree(ctx context.Context, in *EmptyReq, opts ...grpc.CallOption) (*MenuTreeResp, error)
+		MenuList(ctx context.Context, in *EmptyReq, opts ...grpc.CallOption) (*MenuListResp, error)
+		MenuDetail(ctx context.Context, in *MenuDetailReq, opts ...grpc.CallOption) (*MenuDetailResp, error)
+		MenuSave(ctx context.Context, in *MenuSaveReq, opts ...grpc.CallOption) (*SuccessResp, error)
+		MenuUpdate(ctx context.Context, in *MenuUpdateReq, opts ...grpc.CallOption) (*SuccessResp, error)
+		MenuRemove(ctx context.Context, in *MenuRemoveReq, opts ...grpc.CallOption) (*SuccessResp, error)
+		MenuStatus(ctx context.Context, in *MenuStatusReq, opts ...grpc.CallOption) (*SuccessResp, error)
 		// Role
 		RolePage(ctx context.Context, in *RolePageReq, opts ...grpc.CallOption) (*RolePageResp, error)
 		RoleSubmit(ctx context.Context, in *RoleSubmitReq, opts ...grpc.CallOption) (*SuccessResp, error)
 		RoleUpdateStatus(ctx context.Context, in *RoleUpdateStatusReq, opts ...grpc.CallOption) (*SuccessResp, error)
 		RoleRemove(ctx context.Context, in *RoleRemoveReq, opts ...grpc.CallOption) (*SuccessResp, error)
+		RoleDetail(ctx context.Context, in *RoleDetailReq, opts ...grpc.CallOption) (*RoleDetailResp, error)
+		RoleMenuTree(ctx context.Context, in *RoleMenuTreeReq, opts ...grpc.CallOption) (*RoleMenuTreeResp, error)
+		RoleAssignMenus(ctx context.Context, in *RoleAssignMenusReq, opts ...grpc.CallOption) (*SuccessResp, error)
+		RoleDataScope(ctx context.Context, in *RoleDataScopeReq, opts ...grpc.CallOption) (*SuccessResp, error)
 		// User
 		UserList(ctx context.Context, in *UserListReq, opts ...grpc.CallOption) (*UserListResp, error)
 		UserSubmit(ctx context.Context, in *UserSubmitReq, opts ...grpc.CallOption) (*SuccessResp, error)
@@ -152,6 +175,36 @@ func (m *defaultIdentityService) MenuTree(ctx context.Context, in *EmptyReq, opt
 	return client.MenuTree(ctx, in, opts...)
 }
 
+func (m *defaultIdentityService) MenuList(ctx context.Context, in *EmptyReq, opts ...grpc.CallOption) (*MenuListResp, error) {
+	client := pb.NewIdentityServiceClient(m.cli.Conn())
+	return client.MenuList(ctx, in, opts...)
+}
+
+func (m *defaultIdentityService) MenuDetail(ctx context.Context, in *MenuDetailReq, opts ...grpc.CallOption) (*MenuDetailResp, error) {
+	client := pb.NewIdentityServiceClient(m.cli.Conn())
+	return client.MenuDetail(ctx, in, opts...)
+}
+
+func (m *defaultIdentityService) MenuSave(ctx context.Context, in *MenuSaveReq, opts ...grpc.CallOption) (*SuccessResp, error) {
+	client := pb.NewIdentityServiceClient(m.cli.Conn())
+	return client.MenuSave(ctx, in, opts...)
+}
+
+func (m *defaultIdentityService) MenuUpdate(ctx context.Context, in *MenuUpdateReq, opts ...grpc.CallOption) (*SuccessResp, error) {
+	client := pb.NewIdentityServiceClient(m.cli.Conn())
+	return client.MenuUpdate(ctx, in, opts...)
+}
+
+func (m *defaultIdentityService) MenuRemove(ctx context.Context, in *MenuRemoveReq, opts ...grpc.CallOption) (*SuccessResp, error) {
+	client := pb.NewIdentityServiceClient(m.cli.Conn())
+	return client.MenuRemove(ctx, in, opts...)
+}
+
+func (m *defaultIdentityService) MenuStatus(ctx context.Context, in *MenuStatusReq, opts ...grpc.CallOption) (*SuccessResp, error) {
+	client := pb.NewIdentityServiceClient(m.cli.Conn())
+	return client.MenuStatus(ctx, in, opts...)
+}
+
 // Role
 func (m *defaultIdentityService) RolePage(ctx context.Context, in *RolePageReq, opts ...grpc.CallOption) (*RolePageResp, error) {
 	client := pb.NewIdentityServiceClient(m.cli.Conn())
@@ -171,6 +224,26 @@ func (m *defaultIdentityService) RoleUpdateStatus(ctx context.Context, in *RoleU
 func (m *defaultIdentityService) RoleRemove(ctx context.Context, in *RoleRemoveReq, opts ...grpc.CallOption) (*SuccessResp, error) {
 	client := pb.NewIdentityServiceClient(m.cli.Conn())
 	return client.RoleRemove(ctx, in, opts...)
+}
+
+func (m *defaultIdentityService) RoleDetail(ctx context.Context, in *RoleDetailReq, opts ...grpc.CallOption) (*RoleDetailResp, error) {
+	client := pb.NewIdentityServiceClient(m.cli.Conn())
+	return client.RoleDetail(ctx, in, opts...)
+}
+
+func (m *defaultIdentityService) RoleMenuTree(ctx context.Context, in *RoleMenuTreeReq, opts ...grpc.CallOption) (*RoleMenuTreeResp, error) {
+	client := pb.NewIdentityServiceClient(m.cli.Conn())
+	return client.RoleMenuTree(ctx, in, opts...)
+}
+
+func (m *defaultIdentityService) RoleAssignMenus(ctx context.Context, in *RoleAssignMenusReq, opts ...grpc.CallOption) (*SuccessResp, error) {
+	client := pb.NewIdentityServiceClient(m.cli.Conn())
+	return client.RoleAssignMenus(ctx, in, opts...)
+}
+
+func (m *defaultIdentityService) RoleDataScope(ctx context.Context, in *RoleDataScopeReq, opts ...grpc.CallOption) (*SuccessResp, error) {
+	client := pb.NewIdentityServiceClient(m.cli.Conn())
+	return client.RoleDataScope(ctx, in, opts...)
 }
 
 // User

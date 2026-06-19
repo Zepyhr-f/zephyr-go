@@ -53,6 +53,7 @@ type LoginResp struct {
 }
 
 type MenuDetail struct {
+	Id         string       `json:"id,optional"`
 	MenuCode   string       `json:"menuCode"`
 	ParentCode string       `json:"parentCode"`
 	MenuName   string       `json:"menuName"`
@@ -62,7 +63,45 @@ type MenuDetail struct {
 	Path       string       `json:"path"`
 	Component  string       `json:"component"`
 	OrderNum   int32        `json:"orderNum"`
+	Status     int32        `json:"status,optional"`
+	CreateTime string       `json:"createTime,optional"`
 	Children   []MenuDetail `json:"children,optional"`
+}
+
+type MenuSaveReq struct {
+	Code       string `json:"code"`
+	ParentCode string `json:"parentCode,optional"`
+	MenuName   string `json:"menuName"`
+	Icon       string `json:"icon,optional"`
+	MenuType   string `json:"menuType"`
+	Perms      string `json:"perms,optional"`
+	Path       string `json:"path,optional"`
+	Component  string `json:"component,optional"`
+	OrderNum   int32  `json:"orderNum,optional"`
+	Status     int32  `json:"status,optional"`
+}
+
+type MenuUpdateReq struct {
+	Id         string `json:"id,optional"`
+	Code       string `json:"code"`
+	ParentCode string `json:"parentCode,optional"`
+	MenuName   string `json:"menuName"`
+	Icon       string `json:"icon,optional"`
+	MenuType   string `json:"menuType"`
+	Perms      string `json:"perms,optional"`
+	Path       string `json:"path,optional"`
+	Component  string `json:"component,optional"`
+	OrderNum   int32  `json:"orderNum,optional"`
+	Status     int32  `json:"status,optional"`
+}
+
+type MenuRemoveReq struct {
+	Codes []string `json:"codes"`
+}
+
+type MenuStatusReq struct {
+	Code   string `json:"code"`
+	Status int32  `json:"status"`
 }
 
 type MenuTreeResp struct {

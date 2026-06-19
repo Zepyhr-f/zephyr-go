@@ -33,30 +33,7 @@ func (l *MenuTreeLogic) MenuTree(in *pb.EmptyReq) (*pb.MenuTreeResp, error) {
 		return nil, err
 	}
 
-	// Build the tree
 	return &pb.MenuTreeResp{
 		List: buildMenuTree(menus, "-1"),
 	}, nil
-}
-
-func buildMenuTree(menus []model.SysMenu, parentCode string) []*pb.MenuDetail {
-	var list []*pb.MenuDetail
-	for _, menu := range menus {
-		if menu.ParentCode == parentCode || (parentCode == "-1" && menu.ParentCode == "") {
-			detail := &pb.MenuDetail{
-				MenuCode:   menu.Code,
-				ParentCode: menu.ParentCode,
-				MenuName:   menu.MenuName,
-				Icon:       menu.Icon,
-				MenuType:   menu.MenuType,
-				Perms:      menu.Perms,
-				Path:       menu.Path,
-				Component:  menu.Component,
-				OrderNum:   int32(menu.OrderNum),
-			}
-			detail.Children = buildMenuTree(menus, menu.Code)
-			list = append(list, detail)
-		}
-	}
-	return list
 }

@@ -126,9 +126,56 @@ message MenuDetail {
     string component = 8;
     int32 order_num = 9;
     repeated MenuDetail children = 10;
+    string id = 11;
+    int32 status = 12;
+    string create_time = 13;
 }
 message MenuTreeResp {
     repeated MenuDetail list = 1;
+}
+message MenuListResp {
+    int64 total = 1;
+    repeated MenuDetail records = 2;
+    int32 size = 3;
+    int32 current = 4;
+}
+message MenuDetailReq {
+    string code = 1;
+}
+message MenuDetailResp {
+    MenuDetail menu = 1;
+}
+message MenuSaveReq {
+    string code = 1;
+    string parent_code = 2;
+    string menu_name = 3;
+    string icon = 4;
+    string menu_type = 5;
+    string perms = 6;
+    string path = 7;
+    string component = 8;
+    int32 order_num = 9;
+    int32 status = 10;
+}
+message MenuUpdateReq {
+    string id = 1;
+    string code = 2;
+    string parent_code = 3;
+    string menu_name = 4;
+    string icon = 5;
+    string menu_type = 6;
+    string perms = 7;
+    string path = 8;
+    string component = 9;
+    int32 order_num = 10;
+    int32 status = 11;
+}
+message MenuRemoveReq {
+    repeated string codes = 1;
+}
+message MenuStatusReq {
+    string code = 1;
+    int32 status = 2;
 }
 
 // --- Role ---
@@ -168,6 +215,29 @@ message RoleUpdateStatusReq {
 }
 message RoleRemoveReq {
     repeated string ids = 1;
+}
+message RoleDetailReq {
+    string code = 1;
+}
+message RoleDetailResp {
+    RoleDetail role = 1;
+    repeated string menu_codes = 2;
+}
+message RoleMenuTreeReq {
+    string role_code = 1;
+}
+message RoleMenuTreeResp {
+    repeated MenuDetail menus = 1;
+    repeated string checked_keys = 2;
+}
+message RoleAssignMenusReq {
+    string role_code = 1;
+    repeated string menu_codes = 2;
+}
+message RoleDataScopeReq {
+    string role_code = 1;
+    string data_scope = 2;
+    repeated string dept_codes = 3;
 }
 
 // --- User ---
@@ -238,12 +308,22 @@ service IdentityService {
     
     // Menu
     rpc MenuTree(EmptyReq) returns (MenuTreeResp);
+    rpc MenuList(EmptyReq) returns (MenuListResp);
+    rpc MenuDetail(MenuDetailReq) returns (MenuDetailResp);
+    rpc MenuSave(MenuSaveReq) returns (SuccessResp);
+    rpc MenuUpdate(MenuUpdateReq) returns (SuccessResp);
+    rpc MenuRemove(MenuRemoveReq) returns (SuccessResp);
+    rpc MenuStatus(MenuStatusReq) returns (SuccessResp);
     
     // Role
     rpc RolePage(RolePageReq) returns (RolePageResp);
     rpc RoleSubmit(RoleSubmitReq) returns (SuccessResp);
     rpc RoleUpdateStatus(RoleUpdateStatusReq) returns (SuccessResp);
     rpc RoleRemove(RoleRemoveReq) returns (SuccessResp);
+    rpc RoleDetail(RoleDetailReq) returns (RoleDetailResp);
+    rpc RoleMenuTree(RoleMenuTreeReq) returns (RoleMenuTreeResp);
+    rpc RoleAssignMenus(RoleAssignMenusReq) returns (SuccessResp);
+    rpc RoleDataScope(RoleDataScopeReq) returns (SuccessResp);
     
     // User
     rpc UserList(UserListReq) returns (UserListResp);

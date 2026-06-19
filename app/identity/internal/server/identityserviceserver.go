@@ -86,6 +86,36 @@ func (s *IdentityServiceServer) MenuTree(ctx context.Context, in *pb.EmptyReq) (
 	return l.MenuTree(in)
 }
 
+func (s *IdentityServiceServer) MenuList(ctx context.Context, in *pb.EmptyReq) (*pb.MenuListResp, error) {
+	l := logic.NewMenuListLogic(ctx, s.svcCtx)
+	return l.MenuList(in)
+}
+
+func (s *IdentityServiceServer) MenuDetail(ctx context.Context, in *pb.MenuDetailReq) (*pb.MenuDetailResp, error) {
+	l := logic.NewMenuDetailLogic(ctx, s.svcCtx)
+	return l.MenuDetail(in)
+}
+
+func (s *IdentityServiceServer) MenuSave(ctx context.Context, in *pb.MenuSaveReq) (*pb.SuccessResp, error) {
+	l := logic.NewMenuSaveLogic(ctx, s.svcCtx)
+	return l.MenuSave(in)
+}
+
+func (s *IdentityServiceServer) MenuUpdate(ctx context.Context, in *pb.MenuUpdateReq) (*pb.SuccessResp, error) {
+	l := logic.NewMenuUpdateLogic(ctx, s.svcCtx)
+	return l.MenuUpdate(in)
+}
+
+func (s *IdentityServiceServer) MenuRemove(ctx context.Context, in *pb.MenuRemoveReq) (*pb.SuccessResp, error) {
+	l := logic.NewMenuRemoveLogic(ctx, s.svcCtx)
+	return l.MenuRemove(in)
+}
+
+func (s *IdentityServiceServer) MenuStatus(ctx context.Context, in *pb.MenuStatusReq) (*pb.SuccessResp, error) {
+	l := logic.NewMenuStatusLogic(ctx, s.svcCtx)
+	return l.MenuStatus(in)
+}
+
 // Role
 func (s *IdentityServiceServer) RolePage(ctx context.Context, in *pb.RolePageReq) (*pb.RolePageResp, error) {
 	l := logic.NewRolePageLogic(ctx, s.svcCtx)
@@ -105,6 +135,26 @@ func (s *IdentityServiceServer) RoleUpdateStatus(ctx context.Context, in *pb.Rol
 func (s *IdentityServiceServer) RoleRemove(ctx context.Context, in *pb.RoleRemoveReq) (*pb.SuccessResp, error) {
 	l := logic.NewRoleRemoveLogic(ctx, s.svcCtx)
 	return l.RoleRemove(in)
+}
+
+func (s *IdentityServiceServer) RoleDetail(ctx context.Context, in *pb.RoleDetailReq) (*pb.RoleDetailResp, error) {
+	l := logic.NewRoleDetailLogic(ctx, s.svcCtx)
+	return l.RoleDetail(in)
+}
+
+func (s *IdentityServiceServer) RoleMenuTree(ctx context.Context, in *pb.RoleMenuTreeReq) (*pb.RoleMenuTreeResp, error) {
+	l := logic.NewRoleMenuTreeLogic(ctx, s.svcCtx)
+	return l.RoleMenuTree(in)
+}
+
+func (s *IdentityServiceServer) RoleAssignMenus(ctx context.Context, in *pb.RoleAssignMenusReq) (*pb.SuccessResp, error) {
+	l := logic.NewRoleAssignMenusLogic(ctx, s.svcCtx)
+	return l.RoleAssignMenus(in)
+}
+
+func (s *IdentityServiceServer) RoleDataScope(ctx context.Context, in *pb.RoleDataScopeReq) (*pb.SuccessResp, error) {
+	l := logic.NewRoleDataScopeLogic(ctx, s.svcCtx)
+	return l.RoleDataScope(in)
 }
 
 // User

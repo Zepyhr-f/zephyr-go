@@ -12,7 +12,12 @@ import (
 
 func MenuListHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		response.Success(w, adminextra.MenuList(r.Context()))
+		resp, err := adminextra.MenuList(r.Context(), svcCtx.IdentityRpc)
+		if err != nil {
+			response.Error(w, err)
+			return
+		}
+		response.Success(w, resp)
 	}
 }
 
@@ -23,34 +28,104 @@ func MenuDetailHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 			response.Error(w, err)
 			return
 		}
-		resp, ok := adminextra.MenuDetail(r.Context(), req.Code)
-		if !ok {
-			response.Success(w, &types.OperationResp{Success: false, Message: "菜单不存在"})
+		resp, err := adminextra.MenuDetail(r.Context(), svcCtx.IdentityRpc, req.Code)
+		if err != nil {
+			response.Error(w, err)
 			return
 		}
 		response.Success(w, resp)
 	}
 }
 
-func MenuMutationHandler(message string) http.HandlerFunc {
+func MenuSaveHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		response.Success(w, &types.OperationResp{Success: true, Message: message})
+		var req types.MenuSaveReq
+		if err := httpx.Parse(r, &req); err != nil {
+			response.Error(w, err)
+			return
+		}
+		if err := adminextra.MenuSave(r.Context(), svcCtx.IdentityRpc, &req); err != nil {
+			response.Error(w, err)
+			return
+		}
+		response.Success(w, nil)
+	}
+}
+
+func MenuUpdateHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		var req types.MenuUpdateReq
+		if err := httpx.Parse(r, &req); err != nil {
+			response.Error(w, err)
+			return
+		}
+		if err := adminextra.MenuUpdate(r.Context(), svcCtx.IdentityRpc, &req); err != nil {
+			response.Error(w, err)
+			return
+		}
+		response.Success(w, nil)
+	}
+}
+
+func MenuRemoveHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		var req types.MenuRemoveReq
+		if err := httpx.Parse(r, &req); err != nil {
+			response.Error(w, err)
+			return
+		}
+		if err := adminextra.MenuRemove(r.Context(), svcCtx.IdentityRpc, &req); err != nil {
+			response.Error(w, err)
+			return
+		}
+		response.Success(w, nil)
+	}
+}
+
+func MenuStatusHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		var req types.MenuStatusReq
+		if err := httpx.Parse(r, &req); err != nil {
+			response.Error(w, err)
+			return
+		}
+		if err := adminextra.MenuStatus(r.Context(), svcCtx.IdentityRpc, &req); err != nil {
+			response.Error(w, err)
+			return
+		}
+		response.Success(w, nil)
 	}
 }
 
 func RoleDetailHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		var req types.CodeReq
-		_ = httpx.Parse(r, &req)
-		response.Success(w, adminextra.RoleDetail(r.Context(), req.Code))
+		if err := httpx.Parse(r, &req); err != nil {
+			response.Error(w, err)
+			return
+		}
+		resp, err := adminextra.RoleDetail(r.Context(), svcCtx.IdentityRpc, req.Code)
+		if err != nil {
+			response.Error(w, err)
+			return
+		}
+		response.Success(w, resp)
 	}
 }
 
 func RoleMenuTreeHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		var req types.CodeReq
-		_ = httpx.Parse(r, &req)
-		response.Success(w, adminextra.RoleMenuTree(r.Context(), req.Code))
+		if err := httpx.Parse(r, &req); err != nil {
+			response.Error(w, err)
+			return
+		}
+		resp, err := adminextra.RoleMenuTree(r.Context(), svcCtx.IdentityRpc, req.Code)
+		if err != nil {
+			response.Error(w, err)
+			return
+		}
+		response.Success(w, resp)
 	}
 }
 
@@ -61,7 +136,11 @@ func RoleAssignMenusHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 			response.Error(w, err)
 			return
 		}
-		response.Success(w, adminextra.AssignRoleMenus(r.Context(), &req))
+		if err := adminextra.AssignRoleMenus(r.Context(), svcCtx.IdentityRpc, &req); err != nil {
+			response.Error(w, err)
+			return
+		}
+		response.Success(w, nil)
 	}
 }
 
@@ -72,7 +151,11 @@ func RoleDataScopeHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 			response.Error(w, err)
 			return
 		}
-		response.Success(w, adminextra.RoleDataScope(r.Context(), &req))
+		if err := adminextra.RoleDataScope(r.Context(), svcCtx.IdentityRpc, &req); err != nil {
+			response.Error(w, err)
+			return
+		}
+		response.Success(w, nil)
 	}
 }
 
