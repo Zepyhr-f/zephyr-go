@@ -22,7 +22,7 @@ func (SysUser) TableName() string {
 }
 
 func main() {
-	dsn := "postgres://postgres:postgres@127.0.0.1:5432/zephyr_db?sslmode=disable"
+	dsn := "postgres://zephyr:postgres@127.0.0.1:5432/zephyrdb?sslmode=disable"
 	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
 	if err != nil {
 		log.Fatalf("failed to connect database: %v", err)

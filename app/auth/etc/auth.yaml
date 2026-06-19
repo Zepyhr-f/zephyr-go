@@ -1,11 +1,8 @@
 Name: auth.rpc
 ListenOn: 127.0.0.1:8080
-Consul:
-  Host: 127.0.0.1:8500
-  Key: auth.rpc
 
 IdentityRpc:
-  Target: consul://127.0.0.1:8500/identity.rpc?wait=14s
+  Target: 127.0.0.1:8081
 
 BizRedis:
   Host: 127.0.0.1:6379

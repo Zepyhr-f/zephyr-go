@@ -40,5 +40,5 @@ services:
 
 networks:
   default:
-    name: opsdock_default
+    name: infra_default
     external: true

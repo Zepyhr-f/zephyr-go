@@ -3,10 +3,10 @@ Host: 0.0.0.0
 Port: 8888
 
 AuthRpc:
-  Target: consul://consul:8500/auth.rpc?wait=14s
+  Target: auth:8080
 
 IdentityRpc:
-  Target: consul://consul:8500/identity.rpc?wait=14s
+  Target: identity:8081
 
 Auth:
   AccessSecret: zephyr-admin-secret-key-2026

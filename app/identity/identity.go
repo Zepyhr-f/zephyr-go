@@ -12,7 +12,6 @@ import (
 	"github.com/zeromicro/go-zero/core/conf"
 	"github.com/zeromicro/go-zero/core/service"
 	"github.com/zeromicro/go-zero/zrpc"
-	"github.com/zeromicro/zero-contrib/zrpc/registry/consul"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/reflection"
 )
@@ -35,8 +34,6 @@ func main() {
 	})
 	defer s.Stop()
 
-	// register service to consul
-	_ = consul.RegisterService(c.ListenOn, c.Consul)
 
 	fmt.Printf("Starting rpc server at %s...\n", c.ListenOn)
 	s.Start()
