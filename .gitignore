@@ -23,3 +23,7 @@ test_hash.go
 .vscode/
 *.env
 *.log
+
+# Local deployment overrides with real server secrets
+docker-compose.override.yml
+app/*/etc/*-docker.local.yaml
