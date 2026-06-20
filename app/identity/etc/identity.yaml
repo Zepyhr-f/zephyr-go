@@ -3,3 +3,10 @@ ListenOn: 127.0.0.1:8081
 
 Postgres:
   DSN: postgres://zephyr:postgres@127.0.0.1:5432/zephyrdb?sslmode=disable
+
+Log:
+  ServiceName: identity-rpc
+  Mode: console
+  Encoding: plain
+  Level: info
+  Stat: false

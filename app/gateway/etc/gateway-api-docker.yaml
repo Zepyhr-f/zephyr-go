@@ -11,3 +11,15 @@ IdentityRpc:
 Auth:
   AccessSecret: zephyr-admin-secret-key-2026
   AccessExpire: 86400
+
+Log:
+  ServiceName: gateway-api
+  Mode: file
+  Encoding: json
+  Path: /app/logs/gateway
+  Level: info
+  KeepDays: 7
+  Compress: true
+  MaxBackups: 14
+  MaxSize: 50
+  Stat: false

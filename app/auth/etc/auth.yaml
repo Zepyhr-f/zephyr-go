@@ -13,3 +13,10 @@ JwtAuth:
   AccessSecret: zephyr-admin-secret-key-2026
   AccessExpire: 86400
 
+Log:
+  ServiceName: auth-rpc
+  Mode: console
+  Encoding: plain
+  Level: info
+  Stat: false
+

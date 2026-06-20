@@ -3,3 +3,15 @@ ListenOn: 0.0.0.0:8081
 
 Postgres:
   DSN: postgres://zephyr:postgres@pgsql-pgvector:5432/zephyrdb?sslmode=disable
+
+Log:
+  ServiceName: identity-rpc
+  Mode: file
+  Encoding: json
+  Path: /app/logs/identity
+  Level: info
+  KeepDays: 7
+  Compress: true
+  MaxBackups: 14
+  MaxSize: 50
+  Stat: false

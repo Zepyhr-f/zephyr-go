@@ -11,3 +11,10 @@ IdentityRpc:
 Auth:
   AccessSecret: zephyr-admin-secret-key-2026
   AccessExpire: 86400
+
+Log:
+  ServiceName: gateway-api
+  Mode: console
+  Encoding: plain
+  Level: info
+  Stat: false

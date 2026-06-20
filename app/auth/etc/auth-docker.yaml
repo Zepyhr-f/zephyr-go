@@ -13,3 +13,15 @@ JwtAuth:
   AccessSecret: zephyr-admin-secret-key-2026
   AccessExpire: 86400
 
+Log:
+  ServiceName: auth-rpc
+  Mode: file
+  Encoding: json
+  Path: /app/logs/auth
+  Level: info
+  KeepDays: 7
+  Compress: true
+  MaxBackups: 14
+  MaxSize: 50
+  Stat: false
+
