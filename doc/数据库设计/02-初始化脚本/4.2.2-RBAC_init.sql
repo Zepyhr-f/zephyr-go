@@ -73,6 +73,7 @@ INSERT INTO "zephyr_sys_menu" (id, code, parent_code, menu_name, menu_type, path
 (14, 'cache', 'monitor', '缓存监控', 'C', '/monitor/cache', 'monitor/CacheMonitoring', 'DatabaseOutlined', 'sys:cache:list', 2, 1, '000000', 1),
 (15, 'datasource', 'monitor', '数据源监控', 'C', '/monitor/datasource', 'monitor/DataSourceMonitoring', 'DatabaseOutlined', 'sys:db:list', 3, 1, '000000', 1),
 (16, 'cron', 'monitor', '任务调度', 'C', '/monitor/cron', 'monitor/CronJobs', 'ScheduleOutlined', 'sys:job:list', 4, 1, '000000', 1),
+(30, 'log_monitor', 'monitor', '日志监控', 'C', '/monitor/log', 'monitor/LogMonitoring', 'FileTextOutlined', 'sys:log:list', 5, 1, '000000', 1),
 (17, 'infra', '-1', '基础设施', 'M', '/infrastructure', NULL, 'FolderOpenOutlined', NULL, 5, 1, '000000', 1),
 (18, 'dict', 'infra', '字典管理', 'C', '/infrastructure/dict', 'infrastructure/Dictionary', 'SettingOutlined', 'sys:dict:list', 1, 1, '000000', 1),
 (19, 'param', 'infra', '参数配置', 'C', '/infrastructure/params', 'infrastructure/Params', 'SettingOutlined', 'sys:config:list', 2, 1, '000000', 1),
@@ -93,7 +94,7 @@ INSERT INTO "zephyr_sys_menu" (id, code, parent_code, menu_name, menu_type, path
 INSERT INTO "zephyr_sys_role_menu" (role_code, menu_code) VALUES
 ('admin', 'dashboard'), ('admin', 'system'), ('admin', 'user'), ('admin', 'dept'), ('admin', 'post'), ('admin', 'menu'), ('admin', 'role'),
 ('admin', 'security'), ('admin', 'login_log'), ('admin', 'oper_log'), ('admin', 'online'),
-('admin', 'monitor'), ('admin', 'server'), ('admin', 'cache'), ('admin', 'datasource'), ('admin', 'cron'),
+('admin', 'monitor'), ('admin', 'server'), ('admin', 'cache'), ('admin', 'datasource'), ('admin', 'cron'), ('admin', 'log_monitor'),
 ('admin', 'infra'), ('admin', 'dict'), ('admin', 'param'), ('admin', 'file'), ('admin', 'notice'),
 ('admin', 'devtools'), ('admin', 'codegen'), ('admin', 'api_doc'), ('admin', 'sql_terminal'),
 ('admin', 'user_query'), ('admin', 'user_add'), ('admin', 'user_edit'), ('admin', 'user_remove'),
